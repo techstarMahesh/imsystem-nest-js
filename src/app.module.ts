@@ -1,10 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import databaseConfig from './database/databaseConfig';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { dbConfig } from './database/dbConfig';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -20,8 +18,7 @@ import { dbConfig } from './database/dbConfig';
       autoLoadEntities: true,
       synchronize: Boolean(process.env.DATABASE_SYNCHRONIZE),
     }),
+    UserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
