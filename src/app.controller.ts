@@ -8,7 +8,7 @@ export class AppController {
     private readonly appService: AppService,
     private configService: ConfigService,
   ) {
-    const dbName = this.configService.get<string>('dbs.database', {
+    const dbName = this.configService.getOrThrow<string>('dbs.database', {
       infer: true,
     });
     console.log(dbName);
