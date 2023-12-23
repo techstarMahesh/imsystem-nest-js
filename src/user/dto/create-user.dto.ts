@@ -1,16 +1,28 @@
-import { IsBoolean, IsEmail, IsString, Matches, MaxLength, MinLength, Equals } from '@nestjs/class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsString,
+  Matches,
+  MaxLength,
+  MinLength,
+  Equals,
+  IsAlpha,
+  IsPhoneNumber,
+} from '@nestjs/class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsTrue } from 'src/utils/validators/booleanValidator';
 import { RoleEnum } from '../../utils/enums/roleEnum';
 import { GenderEnum } from 'src/utils/enums/genderEnum';
+import { IsEnum } from 'class-validator';
 
 export class CreateUserDto {
   @ApiProperty({ example: 'John' })
   @IsString()
+  @IsAlpha()
   firstName: string;
 
   @ApiProperty({ example: 'Doe' })
-  @IsString()
+  @IsAlpha()
   lastName: string;
 
   @ApiProperty({ example: 'johndoe' })
@@ -33,12 +45,16 @@ export class CreateUserDto {
   @Equals('password', { message: 'password and confirm password should be equal' })
   confirmPassword: string;
 
+  @ApiProperty({ example: '+919876543210' })
+  @IsPhoneNumber()
+  phoneNumber: string;
+
   @ApiProperty({ example: GenderEnum.MALE })
-  @IsString()
+  @IsEnum(GenderEnum)
   gender: GenderEnum;
 
   @ApiProperty({ example: RoleEnum.USER })
-  @IsString()
+  @IsEnum(RoleEnum)
   role: RoleEnum;
 
   @ApiProperty({ example: true })
