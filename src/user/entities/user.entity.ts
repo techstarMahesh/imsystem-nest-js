@@ -1,7 +1,8 @@
 import { IsBoolean, IsEmail, IsString, Matches, MaxLength, MinLength } from '@nestjs/class-validator';
 import { Base } from 'src/utils/helper/base';
-import { Column } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
+@Entity()
 export class User extends Base {
   @IsString()
   @Column()
