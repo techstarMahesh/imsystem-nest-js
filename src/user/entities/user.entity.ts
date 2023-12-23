@@ -1,5 +1,7 @@
-import { IsBoolean, IsEmail, IsString, Matches, MaxLength, MinLength, Validate } from '@nestjs/class-validator';
+import { IsBoolean, IsEmail, IsEnum, IsString, Matches, MaxLength, MinLength } from '@nestjs/class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { GenderEnum } from 'src/utils/enums/genderEnum';
+import { RoleEnum } from 'src/utils/enums/roleEnum';
 import { Base } from 'src/utils/helper/base';
 import { IsTrue } from 'src/utils/validators/booleanValidator';
 import { Column, Entity } from 'typeorm';
@@ -32,6 +34,16 @@ export class User extends Base {
   @Column()
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, { message: 'password too weak' })
   password: string;
+
+  @ApiProperty()
+  @Column()
+  @IsEnum(GenderEnum)
+  gender: GenderEnum;
+
+  @ApiProperty()
+  @Column()
+  @IsEnum(RoleEnum)
+  role: RoleEnum;
 
   @ApiProperty()
   @IsBoolean({ always: true })
