@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { EntityCondication } from 'src/utils/types/entiryCondication';
 
 @Injectable()
 export class UserService {
@@ -16,13 +17,15 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  findOne(id: number): Promise<User> {
-    return this.userRepository.findOne({ where: { id } });
+  findOne(fields: EntityCondication<User>): Promise<User> {
+    return this.userRepository.findOne({
+      where: fields,
+    });
   }
 
   update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     this.userRepository.update(id, updateUserDto);
-    return this.findOne(id);
+    return this.findOne({ id: +id });
   }
 
   remove(id: number) {

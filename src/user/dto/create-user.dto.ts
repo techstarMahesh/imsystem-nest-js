@@ -40,18 +40,13 @@ export class CreateUserDto {
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, { message: 'password too weak' })
   password: string;
 
-  @ApiProperty({ example: 'Password@1' })
-  @IsString()
-  @Equals('password', { message: 'password and confirm password should be equal' })
-  confirmPassword: string;
-
   @ApiProperty({ example: '+919876543210' })
   @IsPhoneNumber()
-  phoneNumber: string;
+  phoneNumber?: string;
 
   @ApiProperty({ example: GenderEnum.MALE })
   @IsEnum(GenderEnum)
-  gender: GenderEnum;
+  gender?: GenderEnum;
 
   @ApiProperty({ example: RoleEnum.USER })
   @IsEnum(RoleEnum)
