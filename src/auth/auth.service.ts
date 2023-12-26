@@ -22,7 +22,7 @@ export class AuthService {
       ...createAuthDto,
       firstName: fullName[0],
       lastName: fullName[1],
-      role: RoleEnum.USER,
+      role: [RoleEnum.USER],
       gender: GenderEnum.OTHER,
     });
     return user;

@@ -5,7 +5,6 @@ import {
   Matches,
   MaxLength,
   MinLength,
-  Equals,
   IsAlpha,
   IsPhoneNumber,
 } from '@nestjs/class-validator';
@@ -48,9 +47,9 @@ export class CreateUserDto {
   @IsEnum(GenderEnum)
   gender?: GenderEnum;
 
-  @ApiProperty({ example: RoleEnum.USER })
+  @ApiProperty({ example: RoleEnum.USER, isArray: true })
   @IsEnum(RoleEnum)
-  role: RoleEnum;
+  role: RoleEnum[];
 
   @ApiProperty({ example: true })
   @IsBoolean({ always: true })
