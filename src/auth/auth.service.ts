@@ -6,6 +6,9 @@ import { GenderEnum } from 'src/utils/enums/genderEnum';
 import { LoginDto } from './dto/authLogin.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { PayloadType } from 'src/utils/types/payload.type';
+import { User } from 'src/user/entities/user.entity';
+import { AuthLoginDtoResponse } from './dto/authLogin.dto.response';
 
 @Injectable()
 export class AuthService {
@@ -13,23 +16,19 @@ export class AuthService {
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
   ) {}
-  async register(createAuthDto: AuthRegisterDto) {
-    const saltOrRounds = 10;
-    const password = createAuthDto.password;
-    const hash = await bcrypt.hash(password, saltOrRounds);
+  async register(createAuthDto: AuthRegisterDto): Promise<User> {
     const fullName = createAuthDto.fullName.split(' ');
     const user = this.userService.create({
       ...createAuthDto,
       firstName: fullName[0],
       lastName: fullName[1],
-      password: hash,
       role: RoleEnum.USER,
       gender: GenderEnum.OTHER,
     });
     return user;
   }
 
-  async login(loginDto: LoginDto) {
+  async login(loginDto: LoginDto): Promise<AuthLoginDtoResponse> {
     let user = await this.userService.findOne({
       email: loginDto.login,
     });
@@ -58,6 +57,12 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
     };
+  }
+
+  me(user: PayloadType): Promise<User> {
+    return this.userService.findOne({
+      userName: user.sub,
+    });
   }
 }
 

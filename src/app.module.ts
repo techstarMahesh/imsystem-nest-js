@@ -5,8 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from './auth/auth.guard';
-import { ApiAuthGuard } from './auth/apiAuth.guard';
+import { AuthGuard } from './utils/guards/auth.guard';
 
 @Module({
   imports: [
@@ -23,7 +22,6 @@ import { ApiAuthGuard } from './auth/apiAuth.guard';
       provide: APP_GUARD,
       useClass: AuthGuard,
     },
-    ApiAuthGuard,
   ],
 })
 export class AppModule {}
