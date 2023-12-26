@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthRegisterDto } from './dto/authRegister.dto';
 import { LoginDto } from './dto/authLogin.dto';
+import { Public } from 'src/utils/decorators/setPublic.decorator';
 
 @ApiTags('Auth')
 @Controller({
@@ -12,14 +13,21 @@ import { LoginDto } from './dto/authLogin.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @Post('register')
   register(@Body() registerDto: AuthRegisterDto) {
     return this.authService.register(registerDto);
   }
 
+  @Public()
   @Post('login')
   login(@Body() registerDto: LoginDto) {
     return this.authService.login(registerDto);
+  }
+
+  @Post('me')
+  me() {
+    return;
   }
 }
 
