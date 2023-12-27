@@ -55,3 +55,12 @@ npm run migration:revert
 ```bash
 npm run migration:run
 ```
+
+## Requairements
+
+### JWT Token
+
+```bash
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2huZGV2Iiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNzAzNjUxNjIyLCJleHAiOjE3NjM2NTE2MjJ9.8jDHp6006hBHjbbhD9QwzTIkr_SMNbeQgCHdEGUNQZQ
+```
+
