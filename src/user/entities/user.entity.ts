@@ -64,7 +64,7 @@ export class User extends Base {
   @ApiProperty()
   @Column({ type: 'simple-array' })
   @IsEnum(RoleEnum)
-  role: RoleEnum[];
+  roles: RoleEnum[];
 
   @ApiProperty()
   @IsBoolean({ always: true })

@@ -28,7 +28,7 @@ export class AuthController {
     return this.authService.login(registerDto);
   }
 
-  @Roles(RoleEnum.ADMIN)
+  @Roles(RoleEnum.USER)
   @Get('me')
   me(@Req() req) {
     return this.authService.me(req.user);

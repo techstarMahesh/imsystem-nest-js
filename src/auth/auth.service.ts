@@ -22,7 +22,7 @@ export class AuthService {
       ...createAuthDto,
       firstName: fullName[0],
       lastName: fullName[1],
-      role: [RoleEnum.USER],
+      roles: [RoleEnum.USER],
       gender: GenderEnum.OTHER,
     });
     return user;
@@ -51,7 +51,7 @@ export class AuthService {
 
     const payload = {
       sub: user.userName,
-      role: user.role,
+      roles: user.roles,
     };
 
     return {

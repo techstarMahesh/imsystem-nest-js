@@ -49,7 +49,7 @@ export class CreateUserDto {
 
   @ApiProperty({ example: RoleEnum.USER, isArray: true })
   @IsEnum(RoleEnum)
-  role: RoleEnum[];
+  roles: RoleEnum[];
 
   @ApiProperty({ example: true })
   @IsBoolean({ always: true })
