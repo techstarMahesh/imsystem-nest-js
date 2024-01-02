@@ -1,9 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { RoleEnum } from 'src/utils/enums/roleEnum';
+import { Roles } from 'src/utils/decorators/roles.decorator';
 
-@Controller('task')
+@Controller({
+  path: 'task',
+  version: '1',
+})
+@ApiTags('task')
+@ApiBearerAuth()
+@Roles(RoleEnum.ADMIN)
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
@@ -13,8 +22,8 @@ export class TaskController {
   }
 
   @Get()
-  findAll() {
-    return this.taskService.findAll();
+  findAll(@Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    return this.taskService.findAll(page, limit);
   }
 
   @Get(':id')
@@ -32,3 +41,4 @@ export class TaskController {
     return this.taskService.remove(+id);
   }
 }
+
