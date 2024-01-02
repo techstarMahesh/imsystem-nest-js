@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Req, Get, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Req, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthRegisterDto } from './dto/authRegister.dto';
@@ -6,7 +6,6 @@ import { LoginDto } from './dto/authLogin.dto';
 import { Public } from 'src/utils/decorators/setPublic.decorator';
 import { Roles } from 'src/utils/decorators/roles.decorator';
 import { RoleEnum } from 'src/utils/enums/roleEnum';
-import { RolesGuard } from 'src/utils/guards/roles.guard';
 
 @ApiTags('Auth')
 @Controller({
@@ -24,12 +23,12 @@ export class AuthController {
   }
 
   @Post('login')
-  @UseGuards(RolesGuard)
+  @Public()
   login(@Body() registerDto: LoginDto) {
     return this.authService.login(registerDto);
   }
 
-  @Roles(RoleEnum.USER)
+  @Roles(RoleEnum.ALL)
   @Get('me')
   me(@Req() req) {
     return this.authService.me(req.user);

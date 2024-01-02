@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="./docs/favicon-16x16.png" sizes="16x16" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <title>IMS</title>
+  </head>
+  <body class="container bg-dark text-light p-5">
+    <h1>Intern Management System</h1>
+    <div id="link">
+      <h3>
+        <a href="/docs">Swagger API</a>
+      </h3>
+      <h3>
+        <a href="/home">Home UI</a>
+      </h3>
+    </div>
+
+    <h1>Admin Token</h1>
+
+    <div class="container mt-5">
+      <code id="codeToCopy">
+        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2huZGV2Iiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNzAzNjUxNjIyLCJleHAiOjE3NjM2NTE2MjJ9.8jDHp6006hBHjbbhD9QwzTIkr_SMNbeQgCHdEGUNQZQ
+      </code>
+      <button class="btn text-light bg-primary" onclick="copyCode()">Copy Code</button>
+    </div>
+    <script>
+      function copyCode() {
+        var codeToCopy = document.getElementById('codeToCopy');
+
+        // Create a temporary textarea element
+        var tempTextarea = document.createElement('textarea');
+        tempTextarea.value = codeToCopy.innerText;
+
+        // Append the textarea element to the document
+        document.body.appendChild(tempTextarea);
+
+        // Select the text in the textarea
+        tempTextarea.select();
+        tempTextarea.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the text to the clipboard
+        document.execCommand('copy');
+
+        // Remove the temporary textarea element
+        document.body.removeChild(tempTextarea);
+
+        // Optionally, provide feedback to the user
+        alert('Code copied to clipboard:\n' + codeToCopy.innerText);
+      }
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -7,6 +7,9 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './utils/guards/jwt.guard';
 import { RolesGuard } from './utils/guards/roles.guard';
+import { HomeModule } from './home/home.module';
+import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -15,8 +18,12 @@ import { RolesGuard } from './utils/guards/roles.guard';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => configService.getOrThrow('typeorm'),
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+    }),
     UserModule,
     AuthModule,
+    HomeModule,
   ],
   providers: [
     {
@@ -29,4 +36,4 @@ import { RolesGuard } from './utils/guards/roles.guard';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }
