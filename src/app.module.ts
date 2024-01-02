@@ -10,6 +10,7 @@ import { RolesGuard } from './utils/guards/roles.guard';
 import { HomeModule } from './home/home.module';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { TaskModule } from './task/task.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     UserModule,
     AuthModule,
     HomeModule,
+    TaskModule,
   ],
   providers: [
     {
