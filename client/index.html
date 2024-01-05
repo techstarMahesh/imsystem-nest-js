@@ -10,50 +10,59 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+      integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd"
+      crossorigin="anonymous"
+    />
     <title>IMS</title>
   </head>
-  <body class="container bg-dark text-light p-5">
+  <body class="container p-2" style="color: #8485b4">
     <h1>Intern Management System</h1>
-    <div id="link">
+    <hr />
+    <div>
       <h3>
-        <a href="/docs">Swagger API</a>
+        <a target="_blank" class="text-decoration-none" href="/docs"
+          >Swagger API <i class="bi bi-box-arrow-up-right"></i
+        ></a>
       </h3>
+      <br />
       <h3>
-        <a href="/home">Home UI</a>
+        <a target="_blank" rel="noopener noreferrer" class="text-decoration-none" href="/home"
+          >Home UI <i class="bi bi-box-arrow-up-right"></i
+        ></a>
       </h3>
     </div>
-
-    <h1>Admin Token</h1>
-
-    <div class="container mt-5">
-      <code id="codeToCopy">
+    <hr />
+    <h3>Admin Token</h3>
+    <hr />
+    <span class="d-flex align-items-center border rounded p-2 w-100 text-break">
+      <code id="codeToCopy" class="p-2">
         eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2huZGV2Iiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNzAzNjUxNjIyLCJleHAiOjE3NjM2NTE2MjJ9.8jDHp6006hBHjbbhD9QwzTIkr_SMNbeQgCHdEGUNQZQ
       </code>
-      <button class="btn text-light bg-primary" onclick="copyCode()">Copy Code</button>
-    </div>
+      <button class="btn btn-light" onclick="copyCode()"><i class="bi bi-clipboard"></i></button>
+    </span>
+    <hr />
+    <hr />
+    <h3>User Token</h3>
+    <hr />
+    <span class="d-flex align-items-center border rounded p-2 w-100 text-break">
+      <code id="codeToCopy" class="p-2">
+        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2huZGV2Iiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNzAzNjUxNjIyLCJleHAiOjE3NjM2NTE2MjJ9.8jDHp6006hBHjbbhD9QwzTIkr_SMNbeQgCHdEGUNQZQ
+      </code>
+      <button class="btn btn-light" onclick="copyCode()"><i class="bi bi-clipboard"></i></button>
+    </span>
+    <hr />
     <script>
       function copyCode() {
-        var codeToCopy = document.getElementById('codeToCopy');
-
-        // Create a temporary textarea element
         var tempTextarea = document.createElement('textarea');
-        tempTextarea.value = codeToCopy.innerText;
-
-        // Append the textarea element to the document
+        tempTextarea.value = document.getElementById('codeToCopy').innerText;
         document.body.appendChild(tempTextarea);
-
-        // Select the text in the textarea
         tempTextarea.select();
         tempTextarea.setSelectionRange(0, 99999); // For mobile devices
-
-        // Copy the text to the clipboard
         document.execCommand('copy');
-
-        // Remove the temporary textarea element
         document.body.removeChild(tempTextarea);
-
-        // Optionally, provide feedback to the user
-        alert('Code copied to clipboard:\n' + codeToCopy.innerText);
       }
     </script>
     <script
