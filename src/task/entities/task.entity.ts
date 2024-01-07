@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from 'src/user/entities/user.entity';
 import { Base } from 'src/utils/helper/base';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Task extends Base {
@@ -19,5 +20,10 @@ export class Task extends Base {
   @ApiProperty()
   @Column()
   taskTag: string;
+
+  @ApiProperty({ type: () => User })
+  @ManyToOne(() => User, (user) => user.tasks, { eager: true })
+  @JoinColumn({ name: 'userId' })
+  userId: User;
 }
 

@@ -1,5 +1,8 @@
-import { IsString, IsBoolean } from '@nestjs/class-validator';
+import { IsString, IsBoolean, IsNumber, Validate } from '@nestjs/class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from 'src/user/entities/user.entity';
+import { IsExist } from 'src/utils/validators/isExist.validator';
+import { DeepPartial } from 'typeorm';
 
 export class CreateTaskDto {
   @ApiProperty()
@@ -17,5 +20,12 @@ export class CreateTaskDto {
   @ApiProperty()
   @IsString()
   taskTag: string;
+
+  @ApiProperty({ type: Number })
+  @IsNumber()
+  @Validate(IsExist, ['User'], {
+    message: 'emailNotExists',
+  })
+  userId: DeepPartial<User>;
 }
 

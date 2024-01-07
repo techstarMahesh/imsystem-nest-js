@@ -2,9 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { RoleEnum } from 'src/utils/enums/roleEnum';
 import { Roles } from 'src/utils/decorators/roles.decorator';
+import { Task } from './entities/task.entity';
 
 @Controller({
   path: 'task',
@@ -16,6 +17,7 @@ import { Roles } from 'src/utils/decorators/roles.decorator';
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
+  @ApiCreatedResponse({ type: Task })
   @Post()
   create(@Body() createTaskDto: CreateTaskDto) {
     return this.taskService.create(createTaskDto);

@@ -5,8 +5,9 @@ import { GenderEnum } from 'src/utils/enums/genderEnum';
 import { RoleEnum } from 'src/utils/enums/roleEnum';
 import { Base } from 'src/utils/helper/base';
 import { IsTrue } from 'src/utils/validators/booleanValidator';
-import { AfterLoad, BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
+import { AfterLoad, BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Task } from 'src/task/entities/task.entity';
 
 @Entity()
 export class User extends Base {
@@ -71,4 +72,8 @@ export class User extends Base {
   @IsTrue()
   @Column()
   termAndCondition: boolean;
+
+  @ApiProperty({ type: () => Task, isArray: true })
+  @OneToMany(() => Task, (task) => task.userId)
+  tasks: Task[];
 }
