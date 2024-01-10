@@ -26,6 +26,7 @@ export class CreateTaskDto {
   // @Validate(IsExist, ['User'], {
   //   message: 'emailNotExists',
   // })
+  // FIXME: Add validation to check user exist or not
   userId: DeepPartial<User>;
 }
 

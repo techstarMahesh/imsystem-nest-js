@@ -6,6 +6,7 @@ export class LoginDto {
   @ApiProperty({ example: 'johndev' })
   @IsString()
   @IsNotEmpty()
+  // TODO: Add validation to check exist or not
   login: string;
 
   @ApiProperty({ example: 'Password@1' })

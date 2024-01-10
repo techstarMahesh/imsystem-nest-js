@@ -14,11 +14,13 @@ export class AuthRegisterDto {
   @IsString()
   @MinLength(4)
   @MaxLength(20)
+  // TODO: Add validation to check exist or not
   userName: string;
 
   @ApiProperty({ example: 'johndev@example.com' })
   @IsNotEmpty()
   @IsEmail()
+  // TODO: Add validation to check exist or not
   email: string;
 
   @ApiProperty({ example: 'Password@1' })

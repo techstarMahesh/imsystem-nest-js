@@ -24,11 +24,13 @@ export class User extends Base {
   @ApiProperty()
   @IsString()
   @Column()
+  // TODO: Add validation to check exist or not
   userName: string;
 
   @ApiProperty()
   @IsEmail()
   @Column()
+  // TODO: Add validation to check exist or not
   email: string;
 
   @ApiProperty()
