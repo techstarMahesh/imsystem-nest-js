@@ -26,8 +26,8 @@ export class TaskService {
   }
 
   async update(id: number, updateTaskDto: UpdateTaskDto) {
-    const updatedUser = await this.taskRepository.update(id, updateTaskDto);
-    if (updatedUser.affected === 1) {
+    const updatedTask = await this.taskRepository.update(id, this.taskRepository.create(updateTaskDto));
+    if (updatedTask.affected === 1) {
       return this.findOne(id);
     } else {
       throw new HttpException('Task not found', HttpStatus.NOT_FOUND);

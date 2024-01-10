@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { PayloadType } from 'src/utils/types/payload.type';
 import { User } from 'src/user/entities/user.entity';
 import { AuthLoginDtoResponse } from './dto/authLogin.dto.response';
+import { AuthUpdateSto } from './dto/authUpdate.dto';
 
 @Injectable()
 export class AuthService {
@@ -63,6 +64,23 @@ export class AuthService {
     return this.userService.findOne({
       userName: user.sub,
     });
+  }
+
+  async mePatch(user: PayloadType, updateUserDto: AuthUpdateSto): Promise<User> {
+    const userData = await this.me(user);
+    const { fullName, ...userToPatch } = updateUserDto;
+    const fullNameData = fullName.split(' ');
+    return this.userService.update(userData.id, {
+      ...userData,
+      ...userToPatch,
+      firstName: fullNameData[0],
+      lastName: fullNameData[1],
+    });
+  }
+
+  async meDelete(user: PayloadType): Promise<User> {
+    const userData = await this.me(user);
+    return this.userService.remove(userData.id);
   }
 }
 

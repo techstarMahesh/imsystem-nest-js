@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Req, Get } from '@nestjs/common';
+import { Controller, Post, Body, Req, Get, Patch, Delete } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthRegisterDto } from './dto/authRegister.dto';
@@ -6,6 +6,7 @@ import { LoginDto } from './dto/authLogin.dto';
 import { Public } from 'src/utils/decorators/setPublic.decorator';
 import { Roles } from 'src/utils/decorators/roles.decorator';
 import { RoleEnum } from 'src/utils/enums/roleEnum';
+import { AuthUpdateSto } from './dto/authUpdate.dto';
 
 @ApiTags('Auth')
 @Controller({
@@ -16,8 +17,8 @@ import { RoleEnum } from 'src/utils/enums/roleEnum';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Public()
   @Post('register')
+  @Public()
   register(@Body() registerDto: AuthRegisterDto) {
     return this.authService.register(registerDto);
   }
@@ -30,8 +31,20 @@ export class AuthController {
 
   @Roles(RoleEnum.ALL)
   @Get('me')
-  me(@Req() req) {
+  meGet(@Req() req) {
     return this.authService.me(req.user);
+  }
+
+  @Roles(RoleEnum.ALL)
+  @Patch('me')
+  mePatch(@Req() req, @Body() updateUserBody: AuthUpdateSto) {
+    return this.authService.mePatch(req.user, updateUserBody);
+  }
+
+  @Roles(RoleEnum.ALL)
+  @Delete('me')
+  meDelete(@Req() req) {
+    return this.authService.meDelete(req.user);
   }
 }
 

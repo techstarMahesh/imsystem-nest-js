@@ -41,7 +41,10 @@ export class User extends Base {
   password: string;
 
   @Exclude({ toPlainOnly: true })
-  public previousPassword: string;
+  @Column({ nullable: true })
+  @IsString()
+  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, { message: 'password too weak' })
+  previousPassword: string;
 
   @AfterLoad()
   public loadPreviousPassword(): void {

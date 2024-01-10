@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -23,12 +23,20 @@ export class UserService {
     });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
-    this.userRepository.update(id, updateUserDto);
-    return this.findOne({ id: +id });
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
+    const updateUser = await this.userRepository.update(id, this.userRepository.create(updateUserDto));
+    if (updateUser.affected === 1) {
+      return this.findOne({ id: +id });
+    } else {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
   }
 
-  remove(id: number) {
-    return this.userRepository.softDelete(id);
+  async remove(id: number): Promise<User> {
+    const updateResult = await this.userRepository.softDelete(id);
+    if (updateResult.affected === 1) {
+      return this.findOne({ id: +id });
+    }
+    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
   }
 }
