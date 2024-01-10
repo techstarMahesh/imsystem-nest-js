@@ -89,6 +89,10 @@ export class AuthService {
     return JSON.stringify(userCompared) === JSON.stringify(userData);
   }
 
+  forgotPassword() {
+    return 'Forgot password';
+  }
+
   me(user: PayloadType): Promise<User> {
     return this.userService.findOne({
       userName: user.sub,

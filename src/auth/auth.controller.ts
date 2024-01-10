@@ -7,6 +7,7 @@ import { Public } from 'src/utils/decorators/setPublic.decorator';
 import { Roles } from 'src/utils/decorators/roles.decorator';
 import { RoleEnum } from 'src/utils/enums/roleEnum';
 import { AuthUpdateDto } from './dto/authUpdate.dto';
+import { AuthForgotPasswordDtoResponse } from './dto/authLogin.dto.response';
 
 @ApiTags('Auth')
 @Controller({
@@ -34,7 +35,12 @@ export class AuthController {
     return this.authService.logout(req.user);
   }
 
-  @Post('test')
+  @Post('forgot-password')
+  forgotPassword(@Body() authForgotPasswordDtoResponse: AuthForgotPasswordDtoResponse) {
+    return this.authService.forgotPassword();
+  }
+
+  @Post('me')
   testProfile(@Req() req, @Body() authUserDto: AuthUpdateDto) {
     return this.authService.test(req.user, authUserDto);
   }
