@@ -15,7 +15,6 @@ export class IsExist implements ValidatorConstraintInterface {
   async validate(value: string, validationArguments: ValidationArguments) {
     const repository = validationArguments.constraints[0];
     const pathToProperty = validationArguments.constraints[1];
-    console.log(repository, pathToProperty);
     const entity: unknown = await this.dataSource.getRepository(repository).findOne({
       where: {
         [pathToProperty ? pathToProperty : validationArguments.property]: pathToProperty
@@ -23,8 +22,6 @@ export class IsExist implements ValidatorConstraintInterface {
           : value,
       },
     });
-    console.log(entity);
-
     return Boolean(entity);
   }
 }

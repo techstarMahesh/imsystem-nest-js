@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -25,8 +25,13 @@ export class TaskService {
     });
   }
 
-  update(id: number, updateTaskDto: UpdateTaskDto) {
-    return this.taskRepository.update(id, updateTaskDto);
+  async update(id: number, updateTaskDto: UpdateTaskDto) {
+    const updatedUser = await this.taskRepository.update(id, updateTaskDto);
+    if (updatedUser.affected === 1) {
+      return this.findOne(id);
+    } else {
+      throw new HttpException('Task not found', HttpStatus.NOT_FOUND);
+    }
   }
 
   remove(id: number) {

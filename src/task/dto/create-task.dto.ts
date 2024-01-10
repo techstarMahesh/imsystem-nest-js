@@ -23,9 +23,9 @@ export class CreateTaskDto {
 
   @ApiProperty({ type: Number })
   @IsNumber()
-  @Validate(IsExist, ['User'], {
-    message: 'emailNotExists',
-  })
+  // @Validate(IsExist, ['User'], {
+  //   message: 'emailNotExists',
+  // })
   userId: DeepPartial<User>;
 }
 

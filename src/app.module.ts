@@ -11,6 +11,7 @@ import { HomeModule } from './home/home.module';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TaskModule } from './task/task.module';
+import { DataSource } from 'typeorm';
 
 @Module({
   imports: [
@@ -18,6 +19,10 @@ import { TaskModule } from './task/task.module';
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => configService.getOrThrow('typeorm'),
+      dataSourceFactory: async (options) => {
+        const dataSource = await new DataSource(options).initialize();
+        return dataSource;
+      },
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client'),
@@ -38,4 +43,4 @@ import { TaskModule } from './task/task.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}
