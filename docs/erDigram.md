@@ -32,7 +32,6 @@ User ||--o{ Assign : "Assigns to"
         int id
         varchar chat
         int taskId
-        int user_id
         DateTime create_at
         DateTime update_at
         DateTime delete_at
