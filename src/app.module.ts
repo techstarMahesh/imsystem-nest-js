@@ -12,6 +12,7 @@ import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TaskModule } from './task/task.module';
 import { DataSource } from 'typeorm';
+import { SessionAndCookieModule } from './session-and-cookie/session-and-cookie.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { DataSource } from 'typeorm';
     AuthModule,
     HomeModule,
     TaskModule,
+    SessionAndCookieModule,
   ],
   providers: [
     {
