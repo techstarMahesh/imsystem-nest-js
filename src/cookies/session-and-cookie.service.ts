@@ -3,8 +3,8 @@ import { Request } from 'express';
 import { CreateCookieDto } from './dto/create-cookie.dto';
 
 @Injectable()
-export class SessionAndCookieService {
-  setCookie(response, createCookieDto: CreateCookieDto) {
+export class CookiesService {
+  setCookie(response: any, createCookieDto: CreateCookieDto) {
     response.cookie(createCookieDto.key, createCookieDto.value, createCookieDto.options);
     return 'ok';
   }
@@ -17,8 +17,9 @@ export class SessionAndCookieService {
     return request.cookies[key];
   }
 
-  updateCookieValue(request: Request, key: string, value: string) {
-    return (request.cookies[key] = value);
+  updateCookieValue(response: any, updateCookieDto: CreateCookieDto) {
+    response.cookie(updateCookieDto.key, updateCookieDto.value, updateCookieDto.options);
+    return 'ok';
   }
 }
 

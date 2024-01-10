@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import databaseConfig from './database/config/typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -12,7 +12,10 @@ import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TaskModule } from './task/task.module';
 import { DataSource } from 'typeorm';
-import { SessionAndCookieModule } from './session-and-cookie/session-and-cookie.module';
+import { SessionsModule } from './sessions/sessions.module';
+import * as session from 'express-session';
+import * as cookieParser from 'cookie-parser';
+import { CookiesModule } from './cookies/cookies.module';
 
 @Module({
   imports: [
@@ -32,7 +35,8 @@ import { SessionAndCookieModule } from './session-and-cookie/session-and-cookie.
     AuthModule,
     HomeModule,
     TaskModule,
-    SessionAndCookieModule,
+    CookiesModule,
+    SessionsModule,
   ],
   providers: [
     {
@@ -45,4 +49,9 @@ import { SessionAndCookieModule } from './session-and-cookie/session-and-cookie.
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(session({ secret: 'your-secret-key', resave: false, saveUninitialized: false })).forRoutes('*');
+    consumer.apply(cookieParser()).forRoutes('*');
+  }
+}

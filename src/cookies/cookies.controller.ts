@@ -1,17 +1,17 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res } from '@nestjs/common';
-import { SessionAndCookieService } from './session-and-cookie.service';
+import { Body, Controller, Get, Param, Patch, Post, Req, Res } from '@nestjs/common';
+import { CookiesService } from './session-and-cookie.service';
 import { Request, Response } from 'express';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateCookieDto } from './dto/create-cookie.dto';
 
-@ApiTags('Session And Cookie')
+@ApiTags('Cookies')
 @ApiBearerAuth()
 @Controller({
-  path: 'session',
+  path: 'cookies',
   version: '1',
 })
-export class SessionAndCookieController {
-  constructor(private readonly sessionAndCookieService: SessionAndCookieService) {}
+export class CookiesController {
+  constructor(private readonly sessionAndCookieService: CookiesService) {}
 
   @Post()
   create(
@@ -32,9 +32,9 @@ export class SessionAndCookieController {
     return this.sessionAndCookieService.findCookieValue(request, key);
   }
 
-  @Patch(':key')
-  updateCookies(@Req() request: Request, @Param('key') key: string, @Param('value') value: string) {
-    return this.sessionAndCookieService.updateCookieValue(request, key, value);
+  @Patch()
+  updateCookies(@Res({ passthrough: true }) response: Request, @Body() updateCookieDto: CreateCookieDto) {
+    return this.sessionAndCookieService.updateCookieValue(response, updateCookieDto);
   }
 }
 
