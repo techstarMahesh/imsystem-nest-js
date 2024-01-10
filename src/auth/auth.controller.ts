@@ -6,7 +6,7 @@ import { LoginDto } from './dto/authLogin.dto';
 import { Public } from 'src/utils/decorators/setPublic.decorator';
 import { Roles } from 'src/utils/decorators/roles.decorator';
 import { RoleEnum } from 'src/utils/enums/roleEnum';
-import { AuthUpdateSto } from './dto/authUpdate.dto';
+import { AuthUpdateDto } from './dto/authUpdate.dto';
 
 @ApiTags('Auth')
 @Controller({
@@ -29,6 +29,16 @@ export class AuthController {
     return this.authService.login(registerDto);
   }
 
+  @Post('logout')
+  logout(@Req() req) {
+    return this.authService.logout(req.user);
+  }
+
+  @Post('test')
+  testProfile(@Req() req, @Body() authUserDto: AuthUpdateDto) {
+    return this.authService.test(req.user, authUserDto);
+  }
+
   @Roles(RoleEnum.ALL)
   @Get('me')
   meGet(@Req() req) {
@@ -37,7 +47,7 @@ export class AuthController {
 
   @Roles(RoleEnum.ALL)
   @Patch('me')
-  mePatch(@Req() req, @Body() updateUserBody: AuthUpdateSto) {
+  mePatch(@Req() req, @Body() updateUserBody: AuthUpdateDto) {
     return this.authService.mePatch(req.user, updateUserBody);
   }
 
