@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res } from '@nestjs/common';
 import { SessionAndCookieService } from './session-and-cookie.service';
 import { Request, Response } from 'express';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -19,13 +19,22 @@ export class SessionAndCookieController {
     @Body() createCookieDto: CreateCookieDto,
     @Res({ passthrough: true }) response: Response,
   ) {
-    this.sessionAndCookieService.setCookie(request, response, createCookieDto);
-    return this.findAll(request);
+    return this.sessionAndCookieService.setCookie(response, createCookieDto);
   }
 
   @Get()
-  findAll(@Req() request: Request) {
-    return this.sessionAndCookieService.findAll(request);
+  findAllCookies(@Req() request: Request) {
+    return this.sessionAndCookieService.findAllCookies(request);
+  }
+
+  @Get(':key')
+  findCookies(@Req() request: Request, @Param('key') key: string) {
+    return this.sessionAndCookieService.findCookieValue(request, key);
+  }
+
+  @Patch(':key')
+  updateCookies(@Req() request: Request, @Param('key') key: string, @Param('value') value: string) {
+    return this.sessionAndCookieService.updateCookieValue(request, key, value);
   }
 }
 
