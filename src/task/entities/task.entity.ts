@@ -22,8 +22,8 @@ export class Task extends Base {
   taskTag: string;
 
   @ApiProperty({ type: () => User })
-  @ManyToOne(() => User, (user) => user.tasks, { eager: true })
-  @JoinColumn({ name: 'userId' })
-  userId: User;
+  @ManyToOne(() => User, (user) => user.id, { eager: true })
+  @JoinColumn({ name: 'user' })
+  user: User;
 }
 

@@ -16,6 +16,7 @@ import { SessionsModule } from './sessions/sessions.module';
 import * as session from 'express-session';
 import * as cookieParser from 'cookie-parser';
 import { CookiesModule } from './cookies/cookies.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { CookiesModule } from './cookies/cookies.module';
     TaskModule,
     CookiesModule,
     SessionsModule,
+    ChatModule,
   ],
   providers: [
     {
